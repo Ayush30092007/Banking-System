@@ -13,6 +13,37 @@ const app = express();
 
 app.use(cors({ origin: true }));
 app.use(express.json());
+// created a helper functions for repeated backend logic , 
+// it helps like converting money into cents , validating positive amounts , checking account types and generateing account number.
+function nowIso() {
+return new Date().toISOString();
+}
+
+function toCents(value) {
+  const numberValue = Number(value);
+  if (!Number.isFinite(numberValue)) {
+    throw new Error ("Amount must be a valid number");
+  }
+  return Math.round(numberValue * 100);
+}
+function requirePositiveAmount(amountCents){
+  if (!Number.isInteger (amountCents) || amountCents <= 0) {
+    throw new Error("Amount must be greater than zero");
+  }
+}
+
+function normalizeAccountType (type) {
+  const value = String(type || "savings").toLowerCase();
+ if (value !== "savings" && value !== "current") {
+    throw new Error ("Account type must be savings or current");
+  }
+  return value;
+}
+
+function generateAccountNumber() {
+  return String(Date.now()).slice(-10);
+  
+}
 
 app.get("/health", (req, res) => {
   res.json({
