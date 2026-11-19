@@ -1,0 +1,4 @@
+bank.exe
+bank
+data/accounts.txt
+tests/fail_*.log
