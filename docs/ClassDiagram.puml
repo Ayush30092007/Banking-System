@@ -1,0 +1,99 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Account {
+  - accNo_ : int
+  - holder_ : Customer
+  - pin_ : string
+  - balance_ : double
+  - history_ : vector<Transaction>
+  - record(type, amount, note) : void
+  + Account(accNo, holder, pin, balance)
+  + {abstract} getType() : string
+  + {abstract} availableToWithdraw() : double
+  + {abstract} monthEndAdjustment() : double
+  + {abstract} policySummary() : string
+  + deposit(amount, note) : void
+  + withdraw(amount, note) : void
+  + applyMonthEnd() : double
+  + verifyPin(pin) : bool
+  + changePin(pin) : void
+  + operator<(Account) : bool
+  + operator<<(ostream, Account)
+}
+class SavingsAccount {
+  + INTEREST_RATE : double {static constexpr}
+  + MIN_BALANCE : double {static constexpr}
+  + getType() : string
+  + availableToWithdraw() : double
+  + monthEndAdjustment() : double
+}
+class CurrentAccount {
+  + OVERDRAFT_LIMIT : double {static constexpr}
+  + OVERDRAFT_RATE : double {static constexpr}
+  + getType() : string
+  + availableToWithdraw() : double
+  + monthEndAdjustment() : double
+}
+class Customer {
+  - name_ : string
+  - ic_ : string
+  - phone_ : string
+  + getName() / getIC() / getPhone()
+  + setName() / setPhone()
+}
+class Transaction {
+  - type_ : string
+  - amount_ : double
+  - balanceAfter_ : double
+  - note_ : string
+  - timestamp_ : string
+  + serialize() : string
+  + isCredit() : bool
+  + operator<<(ostream, Transaction)
+}
+class Bank {
+  - accounts_ : vector<unique_ptr<Account>>
+  - nextAccNo_ : int
+  - dataFile_ : string
+  - save() : void
+  + openAccount(...) : int
+  + findAccount(accNo) : Account*
+  + searchByName(keyword) : vector
+  + listSorted(byBalance) : vector
+  + updateHolder(...) : void
+  + changePin(...) : void
+  + closeAccount(accNo) : double
+  + deposit() / withdraw() / transfer()
+  + applyMonthEnd() : double
+  + report() : string
+}
+class FileManager {
+  + {static} save(path, accounts, nextAccNo)
+  + {static} load(path, accounts, nextAccNo) : bool
+}
+class Menu {
+  - bank_ : Bank&
+  + run() : void
+  - adminMenu() / customerMenu()
+  - createAccountUI() ...
+}
+class BankException
+class InvalidAmountException
+class InsufficientFundsException
+class AccountNotFoundException
+class DuplicateAccountException
+
+Account <|-- SavingsAccount
+Account <|-- CurrentAccount
+Account *-- Customer : holder (composition)
+Account *-- "0..*" Transaction : history (composition)
+Bank o-- "0..*" Account : manages (aggregation)
+Bank ..> FileManager : uses
+Menu --> Bank : uses (association)
+FileManager ..> Account : creates via createAccount()
+BankException <|-- InvalidAmountException
+BankException <|-- InsufficientFundsException
+BankException <|-- AccountNotFoundException
+BankException <|-- DuplicateAccountException
+@enduml

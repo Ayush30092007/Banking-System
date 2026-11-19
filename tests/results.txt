@@ -1,0 +1,28 @@
+TC01|Create savings account|Account number: 1001|PASS
+TC02|Duplicate IC + same type rejected|already has an account|PASS
+TC03|Invalid main menu input (letters)|Invalid input|PASS
+TC04|Wrong admin password 3 times|Too many failed attempts|PASS
+TC05|Opening deposit below RM 10|at least RM 10.00|PASS
+TC28|Phone with 11 digits rejected|Phone must be 9-10 digits|PASS
+TC06|Invalid IC format rejected|IC must contain 12 digits|PASS
+TC07|View all accounts (sorted by balance)|Siti Aminah|PASS
+TC08|Search by name (partial, case-insens.)|Ali Abu|PASS
+TC09|Search name with no match|No matching accounts|PASS
+TC10|Search account number not found|was not found|PASS
+TC11|Update holder name and phone|Account updated|PASS
+TC12|Delete account and pay out balance|Cash returned to customer: RM 500.00|PASS
+TC13|Customer wrong PIN 3 times|Too many failed attempts|PASS
+TC14|Deposit RM 200|New balance: RM 700.00|PASS
+TC15|Savings withdrawal below min balance|Insufficient funds|PASS
+TC16|Zero amount rejected|Amount must be greater than zero|PASS
+TC17|Negative / text amount rejected|Invalid input|PASS
+TC18|Transfer RM 100 to another account|Transfer successful. New balance: RM 400.00|PASS
+TC19|Transfer to same account blocked|same account|PASS
+TC20|Transfer to non-existent account|was not found|PASS
+TC21|Current account overdraft limit|up to RM 100.00|PASS
+TC22|Account report shows history|Initial deposit|PASS
+TC23|Change PIN (customer)|PIN changed successfully|PASS
+TC24|Account report: unknown account number|was not found|PASS
+TC25|Cannot close overdrawn account|Cannot close an overdrawn account|PASS
+TC26|Data persists after restart (file load)|Loaded 1 account(s)|PASS
+TC27|Corrupted data file handled without crash|Data file is corrupted|PASS

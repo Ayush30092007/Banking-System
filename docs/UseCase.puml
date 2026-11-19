@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+actor "Admin (Bank Staff)" as Admin
+actor "Customer" as Cust
+rectangle "Banking System" {
+  usecase "Login (password)" as UC1
+  usecase "Create Account" as UC2
+  usecase "View / Sort Accounts" as UC3
+  usecase "Search Account" as UC4
+  usecase "Update Account" as UC5
+  usecase "Delete (Close) Account" as UC6
+  usecase "Apply Month-End Interest" as UC7
+  usecase "View Bank Report" as UC8
+  usecase "Login (account no. + PIN)" as UC9
+  usecase "Deposit" as UC10
+  usecase "Withdraw" as UC11
+  usecase "Transfer" as UC12
+  usecase "View Transaction History" as UC13
+  usecase "Change PIN" as UC14
+  usecase "Save / Load Data File" as UC15
+}
+Admin --> UC1
+Admin --> UC2
+Admin --> UC3
+Admin --> UC4
+Admin --> UC5
+Admin --> UC6
+Admin --> UC7
+Admin --> UC8
+Cust --> UC9
+Cust --> UC10
+Cust --> UC11
+Cust --> UC12
+Cust --> UC13
+Cust --> UC14
+UC2 ..> UC15 : <<include>>
+UC5 ..> UC15 : <<include>>
+UC6 ..> UC15 : <<include>>
+UC10 ..> UC15 : <<include>>
+UC11 ..> UC15 : <<include>>
+UC12 ..> UC15 : <<include>>
+@enduml
